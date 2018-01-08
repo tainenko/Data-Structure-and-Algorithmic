@@ -5,8 +5,11 @@ import sys
 def max_dot_product(a, b):
     #write your code here
     res = 0
-    for i in range(len(a)):
-        res += a[i] * b[i]
+    a.sort()
+    b.sort()
+    dot_product=[x*y for x,y in zip(a,b)]
+    for i in dot_product:
+        res += i
     return res
 
 if __name__ == '__main__':
