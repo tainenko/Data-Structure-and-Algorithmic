@@ -15,6 +15,29 @@ class HeapBuilder:
     for swap in self._swaps:
       print(swap[0], swap[1])
 
+  def AdvancedSwaps(self):
+      for i in range(len(self._data) , -1, -1):
+          self.Siftdown(i)
+
+#Siftdown: compare the value between parent (i) ,left.child(2i+1) and right.child(2*i+2)
+#(if the root of tree is started from 1, the child would be 2i(left) and 2i+1(right))
+#if the left.child or right.child is larger than parent, swap them.
+  def Siftdown(self,i):
+      index=i
+      left=2*i+1
+      right=2*i+2
+      if left < len(self._data) and self._data[left] < self._data[index]:
+          index=left
+      if right < len(self._data) and self._data[right] < self._data[index]:
+          index=right
+      if index != i:
+          self._swaps.append((i, index))
+          self._data[i], self._data[index] = self._data[index], self._data[i]
+          self.Siftdown(index)
+
+
+
+
   def GenerateSwaps(self):
     # The following naive implementation just sorts 
     # the given sequence using selection sort algorithm
@@ -31,7 +54,8 @@ class HeapBuilder:
 
   def Solve(self):
     self.ReadData()
-    self.GenerateSwaps()
+    #self.GenerateSwaps()
+    self.AdvancedSwaps()
     self.WriteResponse()
 
 if __name__ == '__main__':

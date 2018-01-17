@@ -1,4 +1,21 @@
 # python3
+import heapq
+
+
+class Worker:
+    def __init__(self, id, free_Time=0):
+        self.id = id
+        self.free_Time = free_Time
+
+    def __lt__(self, other):
+        if self.free_Time == other.free_Time:
+            return self.id < other.id
+        return self.free_Time < other.free_Time
+
+    def __gt__(self, other):
+        if self.free_Time == other.free_Time:
+            return self.id > other.id
+        return self.free_Time > other.free_Time
 
 class JobQueue:
     def read_data(self):
@@ -8,7 +25,22 @@ class JobQueue:
 
     def write_response(self):
         for i in range(len(self.jobs)):
-          print(self.assigned_workers[i], self.start_times[i]) 
+          print(self.assigned_workers[i], self.start_times[i])
+
+    def adv_assign_jobs(self):
+        self.assigned_workers = [None] * len(self.jobs)
+        self.start_times = [None] * len(self.jobs)
+        self.worker = [Worker(i) for i in range(self.num_workers)]
+
+        for i in range(len(self.jobs)):
+            freeThread = heapq.heappop(self.worker)
+            self.assigned_workers[i] = freeThread.id
+            self.start_times[i] = freeThread.free_Time
+            freeThread.free_Time += self.jobs[i]
+            heapq.heappush(self.worker, freeThread)
+
+
+
 
     def assign_jobs(self):
         # TODO: replace this code with a faster algorithm.
@@ -26,9 +58,9 @@ class JobQueue:
 
     def solve(self):
         self.read_data()
-        self.assign_jobs()
+        #self.assign_jobs()
+        self.adv_assign_jobs()
         self.write_response()
-
 if __name__ == '__main__':
     job_queue = JobQueue()
     job_queue.solve()
