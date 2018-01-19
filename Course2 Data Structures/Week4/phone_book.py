@@ -7,12 +7,36 @@ class Query:
         if self.type == 'add':
             self.name = query[2]
 
+    def __repr__(self):
+        return "{}, {}{}".format(
+            self.type,
+            self.number,
+            ", {}".format(self.name) if hasattr(self, 'name') else ""
+        )
+
+
 def read_queries():
     n = int(input())
     return [Query(input().split()) for i in range(n)]
 
 def write_responses(result):
     print('\n'.join(result))
+
+def adv_process_qieries(queries):
+    result = []
+    # Use direct addressing scheme
+    contacts = [None] * 10**7
+    for cur_query in queries:
+        if cur_query.type == 'add':
+            contacts[cur_query.number] = cur_query.name
+        elif cur_query.type == 'del':
+            contacts[cur_query.number] = None
+        else:
+            match = contacts[cur_query.number]
+            response = 'not found' if not match else match
+            result.append(response)
+    return result
+
 
 def process_queries(queries):
     result = []
@@ -43,5 +67,5 @@ def process_queries(queries):
     return result
 
 if __name__ == '__main__':
-    write_responses(process_queries(read_queries()))
+    write_responses(adv_process_qieries(read_queries()))
 
