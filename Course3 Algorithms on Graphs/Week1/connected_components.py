@@ -6,7 +6,18 @@ import sys
 def number_of_components(adj):
     result = 0
     #write your code here
+    visited = [False] * len(adj)
+    for num in range(len(adj)):
+        if visited[num] is False:
+            result += 1
+            check(num, visited)
     return result
+
+def check(x,visited):
+    visited[x]=True
+    for num in adj[x]:
+        if visited[num] is False:
+            check(num,visited)
 
 if __name__ == '__main__':
     input = sys.stdin.read()

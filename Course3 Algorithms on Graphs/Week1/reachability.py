@@ -3,8 +3,16 @@
 import sys
 
 def reach(adj, x, y):
-    #write your code here
-    return 0
+    visited = [False]*len(adj)
+    return check(x,y,visited)
+
+def check(x,y,visited):
+    visited[x]=True
+    for num in adj[x]:
+        if visited[num] is False:
+            check(num,y,visited)
+    return 1 if visited[y] is True else 0
+
 
 if __name__ == '__main__':
     input = sys.stdin.read()
