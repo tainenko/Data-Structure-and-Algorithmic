@@ -4,13 +4,13 @@ import sys
 
 def reach(adj, x, y):
     visited = [False]*len(adj)
-    return check(x,y,visited)
+    return explore(x,y,visited)
 
-def check(x,y,visited):
+def explore(x,y,visited):
     visited[x]=True
     for num in adj[x]:
         if visited[num] is False:
-            check(num,y,visited)
+            explore(num,y,visited)
     return 1 if visited[y] is True else 0
 
 

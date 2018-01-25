@@ -10,14 +10,14 @@ def number_of_components(adj):
     for num in range(len(adj)):
         if visited[num] is False:
             result += 1
-            check(num, visited)
+            explore(num, visited)
     return result
 
-def check(x,visited):
+def explore(x,visited):
     visited[x]=True
     for num in adj[x]:
         if visited[num] is False:
-            check(num,visited)
+            explore(num,visited)
 
 if __name__ == '__main__':
     input = sys.stdin.read()
