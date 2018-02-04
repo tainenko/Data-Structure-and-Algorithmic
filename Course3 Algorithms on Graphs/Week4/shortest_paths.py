@@ -23,7 +23,7 @@ def shortet_paths(adj, cost, s, distance, reachable, shortest):
                     queue.append(adj[v][u])
 
     while queue:
-        u = queue.pop()
+        u = queue.pop(0)
         visited[u] = True
         shortest[u] = 0
         for v in adj[u]:
